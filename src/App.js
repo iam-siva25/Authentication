@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+// Authentication/frontend/src/App.js
 
-function App() {
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import NavBar from './components/Navbar';
+
+// Import all page components
+import HomePage from './pages/HomePage'; 
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AuthProvider>
+        <div className="App" style={{ fontFamily: 'Arial, sans-serif' }}>
+          <NavBar />
+          <div style={{ padding: '20px' }}>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              
+              {/* 🔑 Private/Protected Routes 🔑 */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/profile" element={<ProfilePage />} />
+              </Route>
+              
+              <Route path="*" element={<h1>404 Not Found</h1>} />
+            </Routes>
+          </div>
+        </div>
+      </AuthProvider>
+    </Router>
   );
-}
+};
 
 export default App;
