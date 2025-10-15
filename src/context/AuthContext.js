@@ -10,7 +10,7 @@ const AuthContext = createContext(null)
 export const useAuth = () => useContext(AuthContext); 
 
 // Base URL for the backend API
-const API_URL = 'http://localhost:5000/api'; 
+const API_URL = 'https://auth-backend-2l3b.onrender.com/api'; 
 
 
 export const AuthProvider = ({ children }) => {
